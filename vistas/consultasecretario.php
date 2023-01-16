@@ -11,7 +11,7 @@ $autoload= new Autoload();
 ?>
 	    
     <div class="container-fluid text-center text-danger">
-    	<h1 class="m-4">Elija la junta para consultar el secretario en turno</h1>
+    	<h1 class="m-4">Elija la Junta para consultar el Secretario en Turno</h1>
     	<div class="d-sm-inline col m-3 ">
     		<button type="button" class="btn btn-info mt-2" onclick="Seleccion(4,1)">
     			<i class="fa-solid fa-scale-balanced fa-4x"></i>

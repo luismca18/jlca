@@ -16,7 +16,7 @@ include "./modelos/jlca.modelo.php";
 						<table  class="table table-striped">
 							<tr>
 			    				<td class="text-right">	  									
-									Indica la fecha de la demanda: 
+									Fecha de la demanda: 
 								</td>
 								<td class="text-left">
 									<input type="date" name="fecha">
@@ -24,7 +24,7 @@ include "./modelos/jlca.modelo.php";
 							</tr>
 							<tr>
 								<td class="text-right">
-									Elije un límite de tiempo:
+									Hora de recepción:
 								</td>
 								<td class="text-left">
 									<input type="time" step="1" name="hora">

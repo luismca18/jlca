@@ -3,13 +3,20 @@
     include "modulos/menu.php";
     include "./controladores/jlca.controlador.php";
     include "./modelos/jlca.modelo.php";
-	if (isset($_GET['id']))
+
+	$tamDt=strlen($_GET["valId"]);
+	$posDt=strpos($_GET["valId"], "=");
+		
+	$id= substr($_GET["valId"],$posDt+1, ($tamDt-$posDt));
+	if (isset($_GET["valId"]))
 	{
-		$id=$_GET['id'];
+		
 		echo '
 		<script type="text/javascript">
 			console.log("'.$id.'");
-			alert("hola");
+			alert("si");
+			var URLactual = window.location;
+alert(URLactual);
 		</script>
 		
 		';
@@ -17,7 +24,9 @@
 		echo '
 		<script type="text/javascript">
 			console.log("'.$id.'");
-			alert("hola");
+			alert("no");
+			var URLactual = window.location;
+alert(URLactual);
 		</script>
 		
 		';

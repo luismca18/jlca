@@ -631,6 +631,7 @@ const notiNuevas=()=>{
 		success:function(respuesta){
 	   		//console.log(respuesta);
 			obj =JSON.parse(respuesta);
+			//console.log(obj);
 			change(1);
 	   //var Tabla = document.getElementById("miTabla");
 	   //Tabla.innerHTML=respuesta;
@@ -667,17 +668,21 @@ const prevPage=()=>
 		if (page < 1) page = 1;
 		if (page > totNumPages()) page = totNumPages();
 		listing_table.innerHTML = "";
-		for (var i = (page-1) * obj_per_page; i < (page * obj_per_page); i++) {
+		
+		
+		for (var i = (page-1) * obj_per_page; i < ((page * obj_per_page)); i++) {
+			
+			if (i<obj.length){
 			templateHtml=templateHtml +  ` <tr><td>  ` + `
 			<div class="media border p-3">
-				<img src=${obj[i].Dimage} alt="John Doe" class="mr-3 mt-3 " style="width:60px;">
-					<div class="media-body">
-						<h4><a class="Dtitle" href="articulo?id=${obj[i].Did}
-						">${obj[i].Dtitle}</a></h4>
-						<p>${obj[i].Dresumen}</p>      
-						
-					</div>
+				<img src="${obj[i].Dimage}" alt="" class="mr-3 mt-3 " style="width:60px;">
+				<div class="media-body">
+					<h4><a class="Dtitle" href="articulo?valId=${obj[i].Did}
+					">${obj[i].Dtitle}</a></h4>
+					<p>${obj[i].Dresumen}</p>      
+				</div>
 			</div> </td></tr>`;
+			}
 		}
 		listing_table.innerHTML = templateHtml;
 		page_span.innerHTML = page + " de " + totNumPages();

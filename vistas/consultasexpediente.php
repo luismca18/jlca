@@ -42,7 +42,7 @@ $autoload= new Autoload();
 
 </script>
     <div class="container-fluid text-center text-danger p-5">
-    	<h1 class="m-4">Elija la junta para consultar el Expediente electrónico</h1>
+    	<h1 class="m-4">Elija la Junta para consultar el Expediente electrónico</h1>
     	<div class="d-sm-inline col m-3 ">
     		<button type="button" class="btn btn-info mt-2" onclick="Seleccion(1,1)">
     			<i class="fa-solid fa-scale-balanced fa-4x"></i>
