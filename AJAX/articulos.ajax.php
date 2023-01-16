@@ -19,7 +19,21 @@ class AjaxArticulos{
 		$valorDato = $this->validarDato;
 
 
-		$respuesta = ControladorJlca::ctrArticulos();
+		$respuesta = ControladorJlca::ctrArticulos(null);
+
+		//echo json_encode($respuesta);
+		echo json_encode($respuesta);
+		//echo ("error");
+	}
+
+	public $validarDatoId;
+	public function ajaxValidarId(){
+
+		
+		$valorDatoId = $this->validarDatoId;
+
+
+		$respuesta = ControladorJlca::ctrArticulos($valorDatoId);
 
 		//echo json_encode($respuesta);
 		echo json_encode($respuesta);
@@ -27,6 +41,7 @@ class AjaxArticulos{
 	}
 
 }
+
 
 
 
@@ -39,4 +54,11 @@ if(isset($_POST["dato"])){
 }
 
 
+if(isset($_POST["IdVal"])){
+
+	$valDato = new AjaxArticulos();
+	$valDato -> validarDatoId = $_POST["IdVal"];
+	$valDato -> ajaxValidarId();
+
+}
 

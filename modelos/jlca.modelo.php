@@ -109,11 +109,17 @@ class ModeloJlca{
 
 	}	
 
-	static public function mdlArticulos()	{
+	static public function mdlArticulos($datoId)	
+	{
+		if($datoId==null){
 			$stmt = Conexion::conectar()->prepare("SELECT `idArticulo` as Did, `tituloArticulo` as Dtitle, `resumenArticulo` as Dresumen, `contenidoArticulo` as Dcontent, `rutaimagenArticulo` as Dimage, `fechaArticulo` as Ddate FROM `articulos` order by fechaArticulo desc limit 10;");
 			$stmt->execute();
 			return $stmt -> fetchAll();
-
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT `idArticulo` as Did, `tituloArticulo` as Dtitle, `resumenArticulo` as Dresumen, `contenidoArticulo` as Dcontent, `rutaimagenArticulo` as Dimage, `fechaArticulo` as Ddate FROM `articulos` where `idArticulo`=".$datoId.";");
+			$stmt->execute();
+			return $stmt -> fetchAll();
+		}
 	}	
 
 

@@ -245,9 +245,10 @@ class ControladorJlca{
 
 
 
-	static public function ctrArticulos()
+	static public function ctrArticulos($datoId)
 	{
-			$respuesta = ModeloJlca::mdlArticulos();	
+			
+			$respuesta = ModeloJlca::mdlArticulos($datoId);	
 			
 			if(!empty($respuesta)){
 				$respuesta2 = json_encode($respuesta);

@@ -639,6 +639,25 @@ const notiNuevas=()=>{
 	});
 }
 
+const notiConsulta=(idNoti)=>{
+	
+    $.ajax({	
+		url:"ajax/articulos.ajax.php",
+		type:'POST',
+		data: {id:idNoti},
+		beforeSend:function(){},
+		dataType: "json",
+		success:function(respuesta){
+	   		//console.log(respuesta);
+			obj =JSON.parse(respuesta);
+			muestraArticulo();
+	   //var Tabla = document.getElementById("miTabla");
+	   //Tabla.innerHTML=respuesta;
+   		}
+	});
+}
+
+
 const prevPage=()=>
 	{
 		if (current_page > 1) {
@@ -673,15 +692,19 @@ const prevPage=()=>
 		for (var i = (page-1) * obj_per_page; i < ((page * obj_per_page)); i++) {
 			
 			if (i<obj.length){
-			templateHtml=templateHtml +  ` <tr><td>  ` + `
-			<div class="media border p-3">
-				<img src="${obj[i].Dimage}" alt="" class="mr-3 mt-3 " style="width:60px;">
-				<div class="media-body">
-					<h4><a class="Dtitle" href="articulo?valId=${obj[i].Did}
-					">${obj[i].Dtitle}</a></h4>
-					<p>${obj[i].Dresumen}</p>      
-				</div>
-			</div> </td></tr>`;
+			templateHtml=templateHtml +  ` 
+			<tr>
+				<td>  ` + `
+					<div class="media border p-3">
+						<img src="${obj[i].Dimage}" alt="" class="mr-3 mt-3 " style="width:60px;">
+						<div class="media-body">
+							<h4><a class="Dtitle" href="articulo?valId=${obj[i].Did}
+							">${obj[i].Dtitle}</a></h4>
+							<p>${obj[i].Dresumen}</p>      
+						</div>
+					</div> 
+				</td>
+			</tr>`;
 			}
 		}
 		listing_table.innerHTML = templateHtml;
