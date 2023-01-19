@@ -146,6 +146,9 @@
 						Tabla2.innerHTML=respuesta;
 						contenido = document.getElementById("contenido");
 			        	contenido.setAttribute("style", "display:block;");
+						let exp = document.getElementById("idExped").value;
+			    		console.log(exp);
+	
 				        switch (valor)
 							{
 								case 1:
