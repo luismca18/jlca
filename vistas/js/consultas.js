@@ -147,7 +147,7 @@
 						contenido = document.getElementById("contenido");
 			        	contenido.setAttribute("style", "display:block;");
 						let exp = document.getElementById("idExped").value;
-			    		console.log(exp);
+			    		//console.log(exp);
 	
 				        switch (valor)
 							{
@@ -171,6 +171,8 @@
 					        		divLad.setAttribute("style", "display:block;");
 					        		divNot = document.getElementById("divNotificacion");
 					        		divNot.setAttribute("style", "display:block;");
+									ExpAudi(exp,4);
+									ExpAmparo(exp,7);
 					        		break;
 								}   
 								case 2:
@@ -221,6 +223,7 @@
 								}
 								case 4:
 								{
+									ExpAudi(exp,4);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -287,6 +290,7 @@
 								}
 								case 7:
 								{
+									ExpAmparo(exp,7);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -382,6 +386,40 @@
 		}
 
 	}
+
+	const ExpAmparo=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaAmp){
+				var Tabla = document.getElementById("tablaAmparos");
+				Tabla.innerHTML=respuestaAmp;
+				console.log(respuestaAmp);
+			}
+		});
+	}
+	
+
+	const ExpAudi=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaAmp){
+				var Tabla = document.getElementById("tablaAudiencias");
+				Tabla.innerHTML=respuestaAmp;
+				console.log(respuestaAmp);
+			}
+		});
+	}
+	
 
 
 	function secTurno($idJunta){
@@ -480,37 +518,20 @@
    }
 
 
-function lstAudiExped($Junta,$Exped){
-     	$.ajax({	
-    	url:"ajax/secretario.ajax.php",
-		type:'POST',
-		data: {idJunta:$idJunta},
-		beforeSend:function(){},
-		dataType: "html",
-		success:function(respuesta){
-			//console.log(respuesta);
-			var Tabla = document.getElementById("miTabla");
-			Tabla.innerHTML=respuesta;
-		}
-    });
-   }
-
-   function lstAudiExped($Junta,$Exped)
-   {
-		$.ajax({	
-		url:"ajax/secretario.ajax.php",
-		type:'POST',
-		data: {idJunta:$idJunta},
-		beforeSend:function(){},
-		dataType: "html",
-		success:function(respuesta){
-			//console.log(respuesta);
-			var Tabla = document.getElementById("miTabla");
-			Tabla.innerHTML=respuesta;
-		}
+   function lstAudiExped($Junta,$Exped){
+			$.ajax({	
+			url:"ajax/secretario.ajax.php",
+			type:'POST',
+			data: {idJunta:$idJunta},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuesta){
+				//console.log(respuesta);
+				var Tabla = document.getElementById("miTabla");
+				Tabla.innerHTML=respuesta;
+			}
 		});
 	}
-
 
 function muestraOpc(opc){
 		$("#opcFecha").val('');
