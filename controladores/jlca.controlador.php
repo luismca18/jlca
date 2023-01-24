@@ -260,19 +260,19 @@ class ControladorJlca{
 		return $respuesta2;
 	}
 
-	static public function ctrExpAmparos($IdExp)
+	static public function ctrExpRadica($IdExp)
 	{
 		if($IdExp!=null) 
 		{
-			$respuesta = ModeloJlca::mdlAmparos($IdExp);	
+			$respuesta = ModeloJlca::mdlRadicacion($IdExp);	
 			if(!empty($respuesta)){
-			$respuesta2 = '<table  class="table table-responsive table-striped">
+			$respuesta2 = '<table class="table table-striped  table-hover">
     				<thead>
       					<tr>
-      						<th>NUM AMPARO</th>	
 							<th>FECHA</th>
       						<th>HORA</th>
       						<th>DOCUMENTO PRESENTADO POR</th>
+							<th>COMENTARIO</th>	
       					</tr>
       				</thead>
       				<tbody>';
@@ -280,10 +280,45 @@ class ControladorJlca{
 						    foreach ($respuesta as $key => $value) 
     						{
     							$respuesta3=$respuesta3.'<tr>';
-								$respuesta3= $respuesta3.'<td>'.$value['numAmparo'].'</td>';
     							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
     							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
     							$respuesta3= $respuesta3.'<td>'.$value['nomPresento'].'</td>';
+								$respuesta3= $respuesta3.'<td>'.$value['tipoPlant'].'</td>';
+    							$respuesta3=$respuesta3.'</tr>';
+    						}
+					    $respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';
+			}else{
+				$respuesta2 = ' <div class="text-center text-danger">No se encontraron resultados por expediente</div>';
+			}
+
+		}
+		return $respuesta2;
+	}	
+
+	static public function ctrExpPrevencion($IdExp)
+	{
+		if($IdExp!=null) 
+		{
+			$respuesta = ModeloJlca::mdlPrevencion($IdExp);	
+			if(!empty($respuesta)){
+			$respuesta2 = '<table class="table table-striped  table-hover">
+    				<thead>
+      					<tr>
+						  <th>FECHA</th>
+						  <th>HORA</th>
+						  <th>DOCUMENTO PRESENTADO POR</th>
+						  <th>COMENTARIO</th>	
+      					</tr>
+      				</thead>
+      				<tbody>';
+						$respuesta3='';
+						    foreach ($respuesta as $key => $value) 
+    						{
+    							$respuesta3=$respuesta3.'<tr>';
+    							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
+    							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
+    							$respuesta3= $respuesta3.'<td>'.$value['nomPresento'].'</td>';
+								$respuesta3= $respuesta3.'<td>'.$value['tipoPlant'].'</td>';
     							$respuesta3=$respuesta3.'</tr>';
     						}
 					    $respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';
@@ -302,7 +337,7 @@ class ControladorJlca{
 		{
 			$respuesta = ModeloJlca::mdlAudiencias($IdExp);	
 			if(!empty($respuesta)){
-			$respuesta2 = '<table  class="table table-responsive table-striped">
+			$respuesta2 = '<table  class="table table-striped">
     				<thead>
       					<tr>
       						<th>FECHA</th>
@@ -335,15 +370,17 @@ class ControladorJlca{
 	{
 		if($IdExp!=null) 
 		{
-			$respuesta = ModeloJlca::mdExpdAudiencias($IdExp);	
+			$respuesta = ModeloJlca::mdlPromociones($IdExp);	
 			if(!empty($respuesta)){
-			$respuesta2 = '<table class="table table-responsive table-striped  table-hover">
+			$respuesta2 = '<table class="table table-striped  table-hover">
     				<thead>
       					<tr>
 							<th>FECHA</th>
       						<th>HORA</th>
       						<th>DOCUMENTO PRESENTADO POR</th>
 							<th>RESULTADO DEL DOCUMENTO</th>	
+							<th>FECHA DEL ACUERDO</th>
+      						<th>HORA DEL ACUERDO</th>							
       					</tr>
       				</thead>
       				<tbody>';
@@ -355,6 +392,8 @@ class ControladorJlca{
     							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
     							$respuesta3= $respuesta3.'<td>'.$value['nomPresento'].'</td>';
 								$respuesta3= $respuesta3.'<td>'.$value['tipoPlant'].'</td>';
+								$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecGenero'])).'</td>';
+    							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horGenero'])).'</td>';
     							$respuesta3=$respuesta3.'</tr>';
     						}
 					    $respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';
@@ -365,52 +404,17 @@ class ControladorJlca{
 		}
 		return $respuesta2;
 	}	
-
-	static public function ctrExpVistos($IdExp)
-	{
-		if($IdExp!=null) 
-		{
-			$respuesta = ModeloJlca::mdExpdAudiencias($IdExp);	
-			if(!empty($respuesta)){
-				$respuesta2 = '<table class="table table-responsive table-striped  table-hover">
-				<thead>
-					  <tr>
-						<th>FECHA</th>
-						<th>HORA</th>
-						<th>RESULTADO DEL DOCUMENTO</th>	
-					  </tr>
-				  </thead>
-				  <tbody>';
-					$respuesta3='';
-						foreach ($respuesta as $key => $value) 
-						{
-							$respuesta3=$respuesta3.'<tr>';
-							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
-							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
-							$respuesta3= $respuesta3.'<td>'.$value['tipoPlant'].'</td>';
-							$respuesta3=$respuesta3.'</tr>';
-						}
-					$respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';
-			}else{
-				$respuesta2 = ' <div class="text-center text-danger">No se encontraron resultados por expediente</div>';
-			}
-
-		}
-		return $respuesta2;
-	}	
-
 	static public function ctrExpResoluciones($IdExp)
 	{
 		if($IdExp!=null) 
 		{
-			$respuesta = ModeloJlca::mdExpdAudiencias($IdExp);	
+			$respuesta = ModeloJlca::mdlResoluciones($IdExp);	
 			if(!empty($respuesta)){
-			$respuesta2 = '<table class="table table-responsive table-striped  table-hover">
+			$respuesta2 = '<table class="table table-striped  table-hover">
     				<thead>
       					<tr>
 							<th>FECHA</th>
       						<th>HORA</th>
-      						<th>DOCUMENTO PRESENTADO POR</th>
 							<th>COMENTARIO</th>	
       					</tr>
       				</thead>
@@ -419,9 +423,8 @@ class ControladorJlca{
 						    foreach ($respuesta as $key => $value) 
     						{
     							$respuesta3=$respuesta3.'<tr>';
-    							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.$value['nomPresento'].'</td>';
+    							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecGenero'])).'</td>';
+    							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horGenero'])).'</td>';
 								$respuesta3= $respuesta3.'<td>'.$value['tipoPlant'].'</td>';								
     							$respuesta3=$respuesta3.'</tr>';
     						}
@@ -434,15 +437,13 @@ class ControladorJlca{
 		return $respuesta2;
 	}	
 
-
-	
-	static public function ctrExpLaudos($IdExp)
+	static public function ctrExpAmparos($IdExp)
 	{
 		if($IdExp!=null) 
 		{
-			$respuesta = ModeloJlca::mdExpdAudiencias($IdExp);	
+			$respuesta = ModeloJlca::mdlAmparos($IdExp);	
 			if(!empty($respuesta)){
-			$respuesta2 = '<table class="table table-responsive table-striped  table-hover">
+			$respuesta2 = '<table  class="table table-striped">
     				<thead>
       					<tr>
       						<th>NUM AMPARO</th>	
@@ -476,15 +477,15 @@ class ControladorJlca{
 	{
 		if($IdExp!=null) 
 		{
-			$respuesta = ModeloJlca::mdExpdAudiencias($IdExp);	
+			$respuesta = ModeloJlca::mdlOficios($IdExp);	
 			if(!empty($respuesta)){
-			$respuesta2 = '<table class="table table-responsive table-striped  table-hover">
+			$respuesta2 = '<table class="table table-striped  table-hover">
     				<thead>
       					<tr>
-      						<th>NUM AMPARO</th>	
+      						<th>NUM OFICIO - AÑO</th>	
 							<th>FECHA</th>
       						<th>HORA</th>
-      						<th>DOCUMENTO PRESENTADO POR</th>
+      						<th>DIRIGIDO A</th>
       					</tr>
       				</thead>
       				<tbody>';
@@ -492,10 +493,10 @@ class ControladorJlca{
 						    foreach ($respuesta as $key => $value) 
     						{
     							$respuesta3=$respuesta3.'<tr>';
-								$respuesta3= $respuesta3.'<td>'.$value['numAmparo'].'</td>';
-    							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.$value['nomPresento'].'</td>';
+								$respuesta3= $respuesta3.'<td>'.$value['numOficio'].' - '.$value['anioOficio'].'</td>';
+    							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecGenero'])).'</td>';
+    							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horGenero'])).'</td>';
+    							$respuesta3= $respuesta3.'<td>'.$value['dirOficina'].'</td>';
     							$respuesta3=$respuesta3.'</tr>';
     						}
 					    $respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';
@@ -507,54 +508,55 @@ class ControladorJlca{
 		return $respuesta2;
 	}	
 
-	static public function ctrExpRadica($IdExp)
-	{
-		if($IdExp!=null) 
-		{
-			$respuesta = ModeloJlca::mdlRadicacion($IdExp);	
-			if(!empty($respuesta)){
-			$respuesta2 = '<table class="table table-responsive table-striped  table-hover">
-    				<thead>
-      					<tr>
-							<th>FECHA</th>
-      						<th>HORA</th>
-      						<th>DOCUMENTO PRESENTADO POR</th>
-							<th>COMENTARIO</th>	
-      					</tr>
-      				</thead>
-      				<tbody>';
-						$respuesta3='';
-						    foreach ($respuesta as $key => $value) 
-    						{
-    							$respuesta3=$respuesta3.'<tr>';
-    							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.$value['nomPresento'].'</td>';
-								$respuesta3= $respuesta3.'<td>'.$value['tipoPlant'].'</td>';
-    							$respuesta3=$respuesta3.'</tr>';
-    						}
-					    $respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';
-			}else{
-				$respuesta2 = ' <div class="text-center text-danger">No se encontraron resultados por expediente</div>';
-			}
 
-		}
-		return $respuesta2;
-	}	
-
-	static public function ctrExpPrevencion($IdExp)
+	static public function ctrExpVistos($IdExp)
 	{
 		if($IdExp!=null) 
 		{
 			$respuesta = ModeloJlca::mdExpdAudiencias($IdExp);	
 			if(!empty($respuesta)){
-			$respuesta2 = '<table class="table table-responsive table-striped  table-hover">
+				$respuesta2 = '<table class="table table-striped  table-hover">
+				<thead>
+					  <tr>
+						<th>FECHA</th>
+						<th>HORA</th>
+						<th>RESULTADO DEL DOCUMENTO</th>	
+					  </tr>
+				  </thead>
+				  <tbody>';
+					$respuesta3='';
+						foreach ($respuesta as $key => $value) 
+						{
+							$respuesta3=$respuesta3.'<tr>';
+							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
+							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
+							$respuesta3= $respuesta3.'<td>'.$value['tipoPlant'].'</td>';
+							$respuesta3=$respuesta3.'</tr>';
+						}
+					$respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';
+			}else{
+				$respuesta2 = ' <div class="text-center text-danger">No se encontraron resultados por expediente</div>';
+			}
+
+		}
+		return $respuesta2;
+	}	
+
+
+
+	
+	static public function ctrExpLaudos($IdExp)
+	{
+		if($IdExp!=null) 
+		{
+			$respuesta = ModeloJlca::mdlLaudos($IdExp);	
+			if(!empty($respuesta)){
+			$respuesta2 = '<table class="table table-striped  table-hover">
     				<thead>
       					<tr>
-      						<th>NUM AMPARO</th>	
 							<th>FECHA</th>
       						<th>HORA</th>
-      						<th>DOCUMENTO PRESENTADO POR</th>
+      						<th>COMENTARIO</th>
       					</tr>
       				</thead>
       				<tbody>';
@@ -562,10 +564,9 @@ class ControladorJlca{
 						    foreach ($respuesta as $key => $value) 
     						{
     							$respuesta3=$respuesta3.'<tr>';
-								$respuesta3= $respuesta3.'<td>'.$value['numAmparo'].'</td>';
     							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
     							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.$value['nomPresento'].'</td>';
+    							$respuesta3= $respuesta3.'<td>'.$value['tipoPlant'].'</td>';
     							$respuesta3=$respuesta3.'</tr>';
     						}
 					    $respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';
@@ -577,19 +578,18 @@ class ControladorJlca{
 		return $respuesta2;
 	}	
 
+	
 	static public function ctrExpNotifica($IdExp)
 	{
 		if($IdExp!=null) 
 		{
-			$respuesta = ModeloJlca::mdExpdAudiencias($IdExp);	
+			$respuesta = ModeloJlca::mdlNotificacion($IdExp);	
 			if(!empty($respuesta)){
-			$respuesta2 = '<table class="table table-responsive table-striped  table-hover">
+			$respuesta2 = '<table class="table table-striped  table-hover">
     				<thead>
       					<tr>
-      						<th>NUM AMPARO</th>	
 							<th>FECHA</th>
-      						<th>HORA</th>
-      						<th>DOCUMENTO PRESENTADO POR</th>
+      						<th>DESCRIPCION</th>
       					</tr>
       				</thead>
       				<tbody>';
@@ -597,10 +597,8 @@ class ControladorJlca{
 						    foreach ($respuesta as $key => $value) 
     						{
     							$respuesta3=$respuesta3.'<tr>';
-								$respuesta3= $respuesta3.'<td>'.$value['numAmparo'].'</td>';
     							$respuesta3= $respuesta3.'<td>'.date("d-m-Y", strtotime($value['fecPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.date("H:i:s", strtotime($value['horPresenta'])).'</td>';
-    							$respuesta3= $respuesta3.'<td>'.$value['nomPresento'].'</td>';
+    							$respuesta3= $respuesta3.'<td>'.$value['descrip'].'</td>';
     							$respuesta3=$respuesta3.'</tr>';
     						}
 					    $respuesta2 = $respuesta2.$respuesta3.'</tbody></table>';

@@ -199,7 +199,7 @@ class ModeloJlca{
 			demandaresolucionesidturnado as idTurnado, demandaresolucionesfecgenero as fecGenero, demandaresolucioneshoragenero as horGenero, demandaresolucionesidusuario as idUsuario,
 			demandaresolucionestipoplantil as tipoPlant, demandaresolucionesfecliberaci as fecLibero, demandaresolucioneshoraliberac as horLibero, demandaresolucionesestado as  estado,
 			demandaresolucionesidacumulado as idAcum, demandaresolucionesidjunta as idJunta, demandaresolucionesidsecretaria as idSecre FROM demandaresoluciones 
-			where demandaidexpediente=$idExped");
+			where demandaidexpediente=$idExped order by demandaresolucionesfecgenero,demandaresolucioneshoragenero");
 			//$stmt->bindParam(":$fecha", $fecha, PDO::PARAM_STR);
 			//$stmt->bindParam(":$hora", $hora, PDO::PARAM_STR);
 			$stmt->execute();
@@ -220,7 +220,7 @@ class ModeloJlca{
 			demandalaudosturnado as turnado, demandalaudosidturnado as idTurnado, demandalaudostipoplantilla as tipoPlant, demandalaudosestado as estado, 
 			demandalaudosfecliberacion as fecLibero, demandalaudoshoraliberacion   as horLibero, demandalaudossintesis as sintesis, demandalaudosfeclista as fecLista,
 			demandalaudosidacumulado   as idAcum, demandalaudosnumexpediente as numExped FROM demandalaudos  
-			where demandaidexpediente=$idExped");
+			where demandaidexpediente=$idExped order by demandalaudosfecpresentacion,demandalaudoshorapresentacion");
 			//$stmt->bindParam(":$fecha", $fecha, PDO::PARAM_STR);
 			//$stmt->bindParam(":$hora", $hora, PDO::PARAM_STR);
 			$stmt->execute();
@@ -241,7 +241,7 @@ class ModeloJlca{
 			demandaoficiosaniooficio as anioOficio, demandaoficiosdirigidooficina as dirOficina, demandaoficiosdirigidopersona as dirPersona, demandaoficioslocalidad as localidad,
 			demandaoficiosidusuario as idUsuario, demandaoficiostipoplantilla as tipoPlant, demandaoficiosfecliberacion as fecLibero, demandaoficioshoraliberacion as horLibero,
 			demandaoficiosestado as estado, demandaoficiosidacumulado as idAcum, demandaoficiosidjunta as idJunta, demandaoficiosidsecretaria as idSecre FROM demandaoficios  
-			where demandaidexpediente=$idExped");
+			where demandaidexpediente=$idExped order by demandaoficiosfecgenero,demandaoficioshoragenero");
 			//$stmt->bindParam(":$fecha", $fecha, PDO::PARAM_STR);
 			//$stmt->bindParam(":$hora", $hora, PDO::PARAM_STR);
 			$stmt->execute();
@@ -263,7 +263,7 @@ class ModeloJlca{
 			demandadocumentoinicialhorapre as horPresenta, demandadocumentoinicialespreve as esPrevencion, demandadocumentoinicialnombred as nombreDocu,
 			demandadocumentoinicialtipopla as tipoPlant,   demandadocumentoinicialfeclibe as fecLibero, demandadocumentoinicialhoralib as horLibero, 
 			demandadocumentoinicialnompres as nomPresento, demandadocumentoinicialestado as estado FROM demandadocumentoinicial 
-			where demandaidexpediente=$idExped");
+			where demandaidexpediente=$idExped AND demandadocumentoinicialespreve=0");
 			//$stmt->bindParam(":$fecha", $fecha, PDO::PARAM_STR);
 			//$stmt->bindParam(":$hora", $hora, PDO::PARAM_STR);
 			$stmt->execute();
@@ -279,8 +279,13 @@ class ModeloJlca{
 
 		if($idExped != null){
 
-			$stmt = Conexion::conectar()->prepare(" 
-			where demandaidexpediente=$idExped");
+			$stmt = Conexion::conectar()->prepare(" SELECT  demandaidexpediente as idExped, demandadocumentoinicialidjunta as idJunta, demandadocumentoinicialidsecretaria as idSecre, demandadocumentoinicialiddocum as idRadica,
+			demandadocumentoinicialnumexpe as numExped, demandadocumentoinicialturnado as turnado, demandadocumentoinicialidturna as idTurnado, 
+			demandadocumentoinicialfecgene as fecGenero, demandadocumentoinicialhoragen as horGenero, demandadocumentoinicialfecpres as fecPresenta, 
+			demandadocumentoinicialhorapre as horPresenta, demandadocumentoinicialespreve as esPrevencion, demandadocumentoinicialnombred as nombreDocu,
+			demandadocumentoinicialtipopla as tipoPlant,   demandadocumentoinicialfeclibe as fecLibero, demandadocumentoinicialhoralib as horLibero, 
+			demandadocumentoinicialnompres as nomPresento, demandadocumentoinicialestado as estado FROM demandadocumentoinicial 
+			where demandaidexpediente=$idExped AND demandadocumentoinicialespreve=1");
 			//$stmt->bindParam(":$fecha", $fecha, PDO::PARAM_STR);
 			//$stmt->bindParam(":$hora", $hora, PDO::PARAM_STR);
 			$stmt->execute();
@@ -292,7 +297,25 @@ class ModeloJlca{
 
 	}	
 
+	static public function mdlNotificacion($idExped)	{
 
+		if($idExped != null){
+
+			$stmt = Conexion::conectar()->prepare(" SELECT demandaidexpediente as idExped, demandanotificacionidnotificac as idNoti, 
+			demandanotificacionidjunta as idJunta, demandanotificacionidsecretaria as idSecre, demandanotificacionnumexpedien as numExped, 
+			demandanotificacionfecha as fecPresenta, demandanotificaciondescripcion as descrip, demandanotificaciongeneral as general, 
+			demandanotificacionfechaelaboracion as fecElabora FROM demandanotificacion
+			where demandaidexpediente=$idExped ");
+			//$stmt->bindParam(":$fecha", $fecha, PDO::PARAM_STR);
+			//$stmt->bindParam(":$hora", $hora, PDO::PARAM_STR);
+			$stmt->execute();
+
+			return $stmt -> fetchAll();
+		}else{
+			return "error";
+		}
+
+	}	
 
 	static public function mdlArticulos($datoId)	
 	{

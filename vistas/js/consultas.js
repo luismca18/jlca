@@ -171,14 +171,21 @@
 					        		divLad.setAttribute("style", "display:block;");
 					        		divNot = document.getElementById("divNotificacion");
 					        		divNot.setAttribute("style", "display:block;");
+									ExpRadi(exp,2);
+									ExpPreve(exp,3);
 									ExpAudi(exp,4);
+									ExpPromo(exp,5);
+									ExpReso(exp,6);
 									ExpAmparo(exp,7);
+									ExpOficio(exp,8);
+									ExpLaudo(exp,9);
+									ExpNoti(exp,10);
 					        		break;
 								}   
 								case 2:
 								{
 									//expRad(idJunta,prueba.replace('/',''));
-
+									ExpRadi(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:block;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -201,6 +208,7 @@
 								}
 								case 3:
 								{
+									ExpPreve(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -223,7 +231,7 @@
 								}
 								case 4:
 								{
-									ExpAudi(exp,4);
+									ExpAudi(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -246,6 +254,7 @@
 								}
 								case 5:
 								{
+									ExpPromo(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -268,6 +277,7 @@
 								}
 								case 6:
 								{
+									ExpReso(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -290,7 +300,7 @@
 								}
 								case 7:
 								{
-									ExpAmparo(exp,7);
+									ExpAmparo(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -313,6 +323,7 @@
 								}
 								case 8:
 								{
+									ExpOficio(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -335,6 +346,7 @@
 								}
 								case 9:
 								{
+									ExpLaudo(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -357,6 +369,7 @@
 								}
 								case 10:
 								{
+									ExpNoti(exp,valor);
 									divRad = document.getElementById("divRadicacion");
 					        		divRad.setAttribute("style", "display:none;");				
 					        		divPre = document.getElementById("divPrevencion");
@@ -386,6 +399,88 @@
 		}
 
 	}
+	
+	const ExpRadi=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaRadi){
+				var Tabla = document.getElementById("tablaRadicacion");
+				Tabla.innerHTML=respuestaRadi;
+				//console.log(respuestaAud);
+			}
+		});
+	}
+
+	const ExpPreve=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaPreve){
+				var Tabla = document.getElementById("tablaPrevencion");
+				Tabla.innerHTML=respuestaPreve;
+				//console.log(respuestaAud);
+			}
+		});
+	}
+
+	
+	const ExpAudi=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaAud){
+				var Tabla = document.getElementById("tablaAudiencias");
+				Tabla.innerHTML=respuestaAud;
+				//console.log(respuestaAud);
+			}
+		});
+	}
+
+	
+	const ExpPromo=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaPromo){
+				var Tabla = document.getElementById("tablaPromociones");
+				Tabla.innerHTML=respuestaPromo;
+				//console.log(respuestaPromo);
+			}
+		});
+	}
+
+	const ExpReso=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaReso){
+				var Tabla = document.getElementById("tablaResoluciones");
+				Tabla.innerHTML=respuestaReso;
+				//console.log(respuestaReso);
+			}
+		});
+	}
 
 	const ExpAmparo=(idExped,IdOpc)=>{
 
@@ -398,13 +493,12 @@
 			success:function(respuestaAmp){
 				var Tabla = document.getElementById("tablaAmparos");
 				Tabla.innerHTML=respuestaAmp;
-				console.log(respuestaAmp);
+				//console.log(respuestaAmp);
 			}
 		});
 	}
-	
 
-	const ExpAudi=(idExped,IdOpc)=>{
+	const ExpOficio=(idExped,IdOpc)=>{
 
 		$.ajax({	
 			url:"ajax/expediente.ajax.php",
@@ -412,14 +506,45 @@
 			data: { idExp:idExped,Opc: IdOpc},
 			beforeSend:function(){},
 			dataType: "html",
-			success:function(respuestaAmp){
-				var Tabla = document.getElementById("tablaAudiencias");
-				Tabla.innerHTML=respuestaAmp;
-				console.log(respuestaAmp);
+			success:function(respuestaOficio){
+				var Tabla = document.getElementById("tablaOficios");
+				Tabla.innerHTML=respuestaOficio;
+				//console.log(respuestaOficio);
 			}
 		});
 	}
-	
+
+	const ExpLaudo=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaLaudo){
+				var Tabla = document.getElementById("tablaLaudo");
+				Tabla.innerHTML=respuestaLaudo;
+				//console.log(respuestaOficio);
+			}
+		});
+	}
+
+	const ExpNoti=(idExped,IdOpc)=>{
+
+		$.ajax({	
+			url:"ajax/expediente.ajax.php",
+			type:'POST',
+			data: { idExp:idExped,Opc: IdOpc},
+			beforeSend:function(){},
+			dataType: "html",
+			success:function(respuestaNoti){
+				var Tabla = document.getElementById("tablaNotificacion");
+				Tabla.innerHTML=respuestaNoti;
+				//console.log(respuestaOficio);
+			}
+		});
+	}
 
 
 	function secTurno($idJunta){
@@ -517,7 +642,7 @@
 		}
    }
 
-
+/*
    function lstAudiExped($Junta,$Exped){
 			$.ajax({	
 			url:"ajax/secretario.ajax.php",
@@ -532,7 +657,7 @@
 			}
 		});
 	}
-
+*/
 function muestraOpc(opc){
 		$("#opcFecha").val('');
 		$("#numexped").val('');
